@@ -1,6 +1,8 @@
 
 #include "RtGuiMainWindow.hpp"
 
+#include <iostream>
+
 namespace Rt
 {
   namespace Gui
@@ -9,6 +11,7 @@ namespace Rt
       _ui(new Ui::MainWindow)
     {
       _ui->setupUi(this);
+      connect(_ui->actionOpen, SIGNAL(triggered()), SIGNAL(onMenuBarFileOpen()));
     }
 
     MainWindow::~MainWindow()

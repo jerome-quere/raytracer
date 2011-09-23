@@ -8,6 +8,8 @@
 #include <QDomDocument>
 #include <QSharedPointer>
 
+#include "RtMathDouble.hpp"
+#include "RtMathPoint.hpp"
 #include "RtObjectObject.hpp"
 
 namespace Rt
@@ -25,6 +27,8 @@ namespace Rt
     private:
       
       bool parse();
+      bool parseDouble(const QDomElement&, Math::Double&);
+      bool parsePoint(const QDomElement&, Math::Point&);
       bool parseObject(const QDomElement&);
       bool parseSphere(const QDomElement&);
       bool parsePlane(const QDomElement&);

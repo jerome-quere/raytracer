@@ -35,6 +35,8 @@ namespace Rt
 
       virtual QVector<Point> operator&(const Line&) const;
 
+      friend std::ostream& operator<<(std::ostream& stream, const Rt::Math::Plane&);
+
     private:
 
       Double	_a;

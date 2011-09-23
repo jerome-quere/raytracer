@@ -11,10 +11,17 @@ namespace Rt
   {
     class MainWindow : public QMainWindow
     {
+      Q_OBJECT;
+
     public:
       MainWindow();
       ~MainWindow();
 
+      
+    signals:
+
+      void onMenuBarFileOpen();
+ 
     private:
       
       Ui::MainWindow*	_ui;

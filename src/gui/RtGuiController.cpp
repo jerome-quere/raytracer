@@ -1,6 +1,8 @@
 #include "RtGuiController.hpp"
 #include "RtConfLoader.hpp"
 
+#include <iostream>
+
 namespace Rt
 {
   namespace Gui
@@ -8,6 +10,11 @@ namespace Rt
     Controller::Controller()
     {    
       _window.show();
+
+      connect(&_window, SIGNAL(onMenuBarFileOpen()), SLOT(onMenuBarFileOpen()));
+      connect(&_confFileDialog, SIGNAL(fileSelected(const QString&)),
+	      SLOT(onConfFileSelected(const QString&)));
+
     }
 
     Controller::~Controller()
@@ -26,5 +33,17 @@ namespace Rt
 	}
       return (false);
     }
+
+    void Controller::onConfFileSelected(const QString& file)
+    {
+      loadConfFile(file);
+      _confFileDialog.hide();
+    }
+
+    void Controller::onMenuBarFileOpen()
+    {
+      _confFileDialog.show();
+    }
+
   }
 }

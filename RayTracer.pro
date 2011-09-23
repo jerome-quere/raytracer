@@ -15,6 +15,7 @@ MOC_DIR     = ./mocs/
 UI_DIR      = ./mocs/
 
 HEADERS += src/conf/RtConfLoader.hpp            \
+           src/gui/RtGuiConfFileDialog.hpp      \
            src/gui/RtGuiController.hpp          \
            src/gui/RtGuiMainWindow.hpp          \
            src/math/RtMathDouble.hpp            \
@@ -32,6 +33,7 @@ HEADERS += src/conf/RtConfLoader.hpp            \
 
 
 SOURCES += src/conf/RtConfLoader.cpp            \
+           src/gui/RtGuiConfFileDialog.cpp      \
            src/gui/RtGuiController.cpp          \
            src/gui/RtGuiMainWindow.cpp          \
            src/main/main.cpp                    \

@@ -2,6 +2,7 @@
 #ifndef _RT_MATH_SPHERE_
 #define _RT_MATH_SPHERE_
 
+#include <iostream>
 #include "RtMathObject.hpp"
 
 namespace Rt
@@ -29,7 +30,8 @@ namespace Rt
       virtual QVector<Point> operator&(const Line&) const;
 
 
-
+      friend std::ostream& operator<<(std::ostream&, const Sphere&);
+      
     private:
 
       Point	_center;

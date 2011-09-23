@@ -77,39 +77,74 @@ namespace Rt
       return (false);
     }
 
+    bool Loader::parseDouble(const QDomElement& node, Math::Double& value)
+    {
+      QDomText text = node.firstChild().toText();
+
+      if (text.isNull())
+	{
+	  return (false);
+	}
+      value = strtol(text.nodeValue().toStdString().c_str(), NULL, 10);
+      return (true);
+    }
+
+    bool Loader::parsePoint(const QDomElement& node, Math::Point& point)
+    {
+      Math::Double x, y, z;
+
+      QDomElement xNode = node.elementsByTagName("x").at(0).toElement();
+      QDomElement yNode = node.elementsByTagName("y").at(0).toElement();
+      QDomElement zNode = node.elementsByTagName("z").at(0).toElement();
+      
+      if (parseDouble(xNode, x) && parseDouble(yNode, y) && parseDouble(zNode, z))
+	{
+	  point.setXYZ(x, y, z);
+	  return (true);
+	}
+      return (false);
+    }
+
     bool Loader::parseSphere(const QDomElement& sphere)
     {
-      QDomNode center = sphere.elementsByTagName("center").at(0);
-      QDomNode rayon = sphere.elementsByTagName("rayon").at(0);
+      Math::Point  c;
+      Math::Double r;
+
+      QDomElement center = sphere.elementsByTagName("center").at(0).toElement();
+      QDomElement rayon = sphere.elementsByTagName("rayon").at(0).toElement();
       
-      Math::Double x,y, z, r;
-      x = strtol(center.attributes().namedItem("x").nodeValue().toStdString().c_str(), NULL, 10);
-      y = strtol(center.attributes().namedItem("y").nodeValue().toStdString().c_str(), NULL, 10);
-      z = strtol(center.attributes().namedItem("z").nodeValue().toStdString().c_str(), NULL, 10);
-      r = strtol(rayon.nodeValue().toStdString().c_str(), NULL, 10);
-      
-      Math::Sphere s(Math::Point(x, y, z), r);
-      
-      QSharedPointer<Object::Object> object(new Object::Sphere(s));
-      _objects.push_back(object);
-      return (true);
+      if (parsePoint(center, c) && parseDouble(rayon, r))
+	{
+	  Math::Sphere s(c, r);
+	  std::cout << s << std::endl;
+	  QSharedPointer<Object::Object> object(new Object::Sphere(s));
+
+	  _objects.push_back(object);
+	  return (true);
+	}
+      return (false);
     }
 
     bool Loader::parsePlane(const QDomElement& plane)
     {
-      Math::Double a = strtol(plane.elementsByTagName("a").at(0).nodeValue().toStdString().c_str(), NULL, 10);
-      Math::Double b = strtol(plane.elementsByTagName("b").at(0).nodeValue().toStdString().c_str(), NULL, 10);
-      Math::Double c = strtol(plane.elementsByTagName("c").at(0).nodeValue().toStdString().c_str(), NULL, 10);
-      Math::Double d = strtol(plane.elementsByTagName("d").at(0).nodeValue().toStdString().c_str(), NULL, 10);
+      Math::Double a, b, c, d;
       
-      Math::Plane p(a, b, c, d);
+      QDomElement aNode = plane.elementsByTagName("a").at(0).toElement();
+      QDomElement bNode = plane.elementsByTagName("b").at(0).toElement();
+      QDomElement cNode = plane.elementsByTagName("c").at(0).toElement();
+      QDomElement dNode = plane.elementsByTagName("d").at(0).toElement();
       
-      QSharedPointer<Object::Object> object(new Object::Plane(p));
-      _objects.push_back(object);
-      return (true);
-    }
-
-
-    
+      if (parseDouble(aNode, a) && parseDouble(bNode, b) && 
+	  parseDouble(cNode, c) && parseDouble(dNode, d))
+	{
+	  Math::Plane p(a, b, c, d);
+	  std::cout << p << std::endl;
+	  QSharedPointer<Object::Object> object(new Object::Plane(p));
+	  
+	  _objects.push_back(object);
+	  return (true);
+	}
+      return (false);
+    }    
   }
 }

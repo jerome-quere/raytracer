@@ -1,0 +1,18 @@
+<raytracer>
+  <objects>
+    <object type="sphere">
+      <center>
+	<x>0</x>
+	<y>0</y>
+	<z>0</z>
+      </center>
+      <rayon>100</rayon>
+    </object>
+    <object type="plane">
+      <a>0</a>
+      <b>0</b>
+      <c>1</c>
+      <d>0</d>
+    </object>
+  </objects>
+</raytracer>

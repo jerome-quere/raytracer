@@ -3,16 +3,20 @@
 #ifndef _RT_GUI_CONTROLLER_
 #define _RT_GUI_CONTROLLER_
 
+#include <QObject>
 #include <QString>
 #include "RtGuiMainWindow.hpp"
 #include "RtObjectObject.hpp"
+#include "RtGuiConfFileDialog.hpp"
 
 namespace Rt
 {
   namespace Gui
   {
-    class Controller
+    class Controller : public QObject
     {
+
+      Q_OBJECT;
 
     public:
       
@@ -21,9 +25,15 @@ namespace Rt
       
       bool loadConfFile(const QString&);
 
+    private slots:
+      
+      void onConfFileSelected(const QString& file);
+      void onMenuBarFileOpen();
+
     private:
 
       MainWindow				_window;
+      ConfFileDialog				_confFileDialog;
       QVector<QSharedPointer<Object::Object> > _objects;
       
     };

@@ -122,5 +122,14 @@ namespace Rt
       return (points);
     }
 
+    std::ostream& operator<<(std::ostream& stream, const Rt::Math::Plane& plane)
+    {
+      stream << "Plane {a:" << plane._a << " b:" << plane._b 
+	     << " c:" << plane._c << " d:" << plane._d << "} ";
+      return (stream);
+    }
   }
 }
+
+
+

@@ -88,5 +88,13 @@ namespace Rt
 	}
       return (points);
     }
+
+    std::ostream& operator<<(std::ostream& stream, const Sphere& sphere)
+    {
+      stream << "Sphere {center: " << sphere._center << " rayon: " << sphere._rayon << "} ";
+      return (stream);
+    }
+
   }
+  
 }

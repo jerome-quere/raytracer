@@ -24,7 +24,6 @@ namespace Rt
 
     Point::~Point()
     {
-      std::cout << "Destruct " << std::endl;
     }
 
     Point& Point::operator=(const Point& obj)
