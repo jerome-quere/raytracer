@@ -2,6 +2,9 @@
 #ifndef _RT_OBJECT_EYE_
 #define _RT_OBJECT_EYE_
 
+#include "RtMathPoint.hpp"
+#include "RtMathVector.hpp"
+
 namespace Rt
 {
   namespace Object
@@ -19,7 +22,7 @@ namespace Rt
       Math::Point	_position;
       Math::Vector	_direction;
  
-    }
+    };
   }
 }
 

@@ -33,35 +33,59 @@ namespace Rt
       file.close();
       return (parse()); 
     }
-
-    const QVector<QSharedPointer<Object::Object> >& Loader::objects() const
+    
+    Conf  Loader::conf() const
     {
-      return _objects;
+      return (_conf);
     }
 
 
-    bool Loader::parse()
-    {
-      QDomNode root = _document.documentElement();
-      QDomNode objects = root.toElement().elementsByTagName("objects").at(0);
-      
-      if (objects.isNull())
-	{
-	  return (false);
-	}
+     bool Loader::parse()
+     {
+       QDomNode root = _document.documentElement();
+       QDomElement objects = root.toElement().elementsByTagName("objects").at(0).toElement();
+       QDomElement eye = root.toElement().elementsByTagName("eye").at(0).toElement();
 
-      QDomNodeList objectsList = objects.childNodes();
+       if (!objects.isNull() && parseObjects(objects) &&
+	   !eye.isNull() && parseEye(eye))
+	 {
+	   return (true);
+	 }
+       return (false);
+     }
+
+
+     bool Loader::parseEye(const QDomElement& eye)
+     {
+       QDomElement position = eye.elementsByTagName("position").at(0).toElement();
+       QDomElement direction = eye.elementsByTagName("direction").at(0).toElement();
+
+       Math::Point point;
+       Math::Vector vector;
+
+       if (parsePoint(position, point) && parseVector(direction, vector))
+	 {
+	   std::cout << "Eye { position: " << point << " direction: " << vector << std::endl;
+	  _conf._eye = QSharedPointer<Object::Eye>(new Object::Eye(point, vector));
+	  return (true);
+	}
+      return (false);
+    }
+
+    bool Loader::parseObjects(const QDomElement& objects)
+    {
+      QDomNodeList nodesList = objects.childNodes();
       
-      for (unsigned int i = 0 ; i < objectsList.length() ; i++)
+      for (unsigned int i = 0 ; i < nodesList.length() ; i++)
 	{
-	  if (!parseObject(objectsList.at(i).toElement()))
+	  if (!parseObject(nodesList.at(i).toElement()))
 	    {
 	      return (false);
 	    }
 	}
       return (true);
     }
-
+    
     bool Loader::parseObject(const QDomElement& object)
     {
       QString type = object.attributes().namedItem("type").nodeValue();
@@ -104,6 +128,23 @@ namespace Rt
 	}
       return (false);
     }
+    
+    bool Loader::parseVector(const QDomElement& node, Math::Vector& vector)
+    {
+      Math::Double x, y, z;
+
+      QDomElement xNode = node.elementsByTagName("x").at(0).toElement();
+      QDomElement yNode = node.elementsByTagName("y").at(0).toElement();
+      QDomElement zNode = node.elementsByTagName("z").at(0).toElement();
+      
+      if (parseDouble(xNode, x) && parseDouble(yNode, y) && parseDouble(zNode, z))
+	{
+	  vector.setXYZ(x, y, z);
+	  return (true);
+	}
+      return (false);
+    }
+
 
     bool Loader::parseSphere(const QDomElement& sphere)
     {
@@ -119,7 +160,7 @@ namespace Rt
 	  std::cout << s << std::endl;
 	  QSharedPointer<Object::Object> object(new Object::Sphere(s));
 
-	  _objects.push_back(object);
+	  _conf._objects.push_back(object);
 	  return (true);
 	}
       return (false);
@@ -141,7 +182,7 @@ namespace Rt
 	  std::cout << p << std::endl;
 	  QSharedPointer<Object::Object> object(new Object::Plane(p));
 	  
-	  _objects.push_back(object);
+	  _conf._objects.push_back(object);
 	  return (true);
 	}
       return (false);

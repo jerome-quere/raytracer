@@ -6,7 +6,7 @@
 #include <QObject>
 #include <QString>
 #include "RtGuiMainWindow.hpp"
-#include "RtObjectObject.hpp"
+#include "RtConfConf.hpp"
 #include "RtGuiConfFileDialog.hpp"
 
 namespace Rt
@@ -25,6 +25,8 @@ namespace Rt
       
       bool loadConfFile(const QString&);
 
+				       
+
     private slots:
       
       void onConfFileSelected(const QString& file);
@@ -32,9 +34,9 @@ namespace Rt
 
     private:
 
-      MainWindow				_window;
-      ConfFileDialog				_confFileDialog;
-      QVector<QSharedPointer<Object::Object> > _objects;
+      MainWindow	_window;
+      ConfFileDialog	_confFileDialog;
+      Conf::Conf	_conf;
       
     };
   }

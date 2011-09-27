@@ -15,4 +15,16 @@
       <d>0</d>
     </object>
   </objects>
+  <eye>
+    <position>
+      <x>0</x>
+      <y>-200</y>
+      <z>0</z>
+    </position>
+    <direction>
+      <x>0</x>
+      <y>1</y>
+      <z>0</z>
+    </direction>
+  </eye>
 </raytracer>

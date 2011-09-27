@@ -8,9 +8,13 @@
 #include <QDomDocument>
 #include <QSharedPointer>
 
+#include "RtConfConf.hpp"
+
 #include "RtMathDouble.hpp"
 #include "RtMathPoint.hpp"
+#include "RtMathVector.hpp"
 #include "RtObjectObject.hpp"
+#include "RtObjectEye.hpp"
 
 namespace Rt
 {
@@ -22,19 +26,23 @@ namespace Rt
       Loader();
       
       bool load(const QString&);
-      const QVector<QSharedPointer<Object::Object> >& objects() const;
+      Conf conf() const;
       
     private:
       
       bool parse();
       bool parseDouble(const QDomElement&, Math::Double&);
       bool parsePoint(const QDomElement&, Math::Point&);
+      bool parseVector(const QDomElement&, Math::Vector&);
+      bool parseEye(const QDomElement&);
+      bool parseObjects(const QDomElement&);
       bool parseObject(const QDomElement&);
       bool parseSphere(const QDomElement&);
       bool parsePlane(const QDomElement&);
 
-      QDomDocument			       _document;
-      QVector<QSharedPointer<Object::Object> > _objects;
+
+      QDomDocument    _document;
+      Conf	      _conf;
     };
   }
 }

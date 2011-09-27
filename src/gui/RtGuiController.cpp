@@ -28,7 +28,7 @@ namespace Rt
 
       if (loader.load(path))
 	{
-	  _objects = loader.objects();
+	  _conf = loader.conf();
 	  return (true);
 	}
       return (false);
