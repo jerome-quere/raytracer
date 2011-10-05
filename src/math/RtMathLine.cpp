@@ -13,11 +13,18 @@ namespace Rt
     {  
     }
 
+
     Line::Line(const Point& point, const Vector& vector):
       _point(point),
       _vector(vector)
     {
 
+    }
+
+    Line::Line(const Point& pointA, const Point& pointB):
+      _point(pointA)
+    {
+      _vector = pointB - pointA;
     }
 
     Line::~Line()

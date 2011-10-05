@@ -10,7 +10,15 @@ namespace Rt
     const double Double::error_margin = 0.00000001;
 
     Double::Double(double value) :
-      _value(value)
+      _value(value),
+      _squareFill(false),
+      _square(0),
+      _sqrtFill(false),
+      _sqrt(0),
+      _sinFill(false),
+      _sin(0),
+      _cosFill(false),
+      _cos(0)
     {  
     }
 
@@ -23,7 +31,11 @@ namespace Rt
       _squareFill(obj._squareFill),
       _square(obj._square),
       _sqrtFill(obj._sqrtFill),
-      _sqrt(obj._sqrt)
+      _sqrt(obj._sqrt),
+      _sinFill(obj._sinFill),
+      _sin(obj._sin),
+      _cosFill(obj._cosFill),
+      _cos(obj._cos)
     {
     }
 
@@ -34,6 +46,10 @@ namespace Rt
       _square = obj._square;
       _sqrtFill = obj._sqrtFill;
       _sqrt = obj._sqrt;
+      _sinFill = obj._sinFill;
+      _sin = obj._sin;
+      _cosFill = obj._cosFill;
+      _cos = obj._cos;
       return (*this);
     }
 
@@ -142,6 +158,31 @@ namespace Rt
 	  _sqrtFill = true;
 	}
       return (_sqrt);
+    }
+
+    Double Double::sin() const
+    {
+      if (!_sinFill)
+	{
+	  _sin = ::sin(_value);
+	  _sinFill = true;
+	}
+      return (_sin);
+    }
+
+    Double Double::cos() const
+    {
+      if (!_cosFill)
+	{
+	  _cos = ::cos(_value);
+	  _cosFill = true;
+	}
+      return (_cos);
+    }
+
+    double Double::value() const
+    {
+      return (_value);
     }
 
     Double operator*(const double& nb1, const Double& nb2)

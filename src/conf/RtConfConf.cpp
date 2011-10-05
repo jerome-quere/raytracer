@@ -1,10 +1,12 @@
 #include "RtConfConf.hpp"
+#include <stdexcept>
 
 namespace Rt
 {
   namespace Conf
   {
-    Conf::Conf()
+    Conf::Conf() :
+      _3d(false)
     {
     }
     
@@ -21,17 +23,35 @@ namespace Rt
     {
       _objects = obj._objects;
       _eye = obj._eye;
+      _width = obj._width;
+      _height = obj._height;
+      _3d = obj._3d;
       return (*this);
     }
 
-    int	Conf::imageWidth() const
+    unsigned int	Conf::imageWidth() const
     {
-      return (0);
+      return (_width);
     }
 
-    int	Conf::imageHeight() const
+    unsigned int	Conf::imageHeight() const
     {
-      return (0);
+      return (_height);
     }
+
+    bool		Conf::is3dEnable() const
+    {
+      return (_3d);
+    }
+
+    const Object::Eye&	Conf::eye() const
+    {
+      if (!_eye)
+	{
+	  throw (new std::runtime_error("Eye is not set"));
+	}
+      return (*(_eye.data()));
+    }
+
   }
 }

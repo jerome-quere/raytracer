@@ -12,7 +12,6 @@ namespace Rt
       _y(y),
       _z(z)
     {
-      std::cout << "Point Construct" << std::endl;
     }
 
     Point::Point(const Point& obj) :
@@ -32,6 +31,21 @@ namespace Rt
       _y = obj._y;
       _z = obj._z;
       return (*this);
+    }
+
+    Double& Point::x()
+    {
+      return (_x);
+    }
+
+    Double& Point::y()
+    {
+      return (_y);
+    }
+
+    Double& Point::z()
+    {
+      return (_z);
     }
 
     const Double& Point::x() const
@@ -105,6 +119,11 @@ namespace Rt
       res.y(_y - point.y());
       res.z(_z - point.z());
       return (res);
+    }
+
+    Vector Point::toVector() const
+    {
+      return (Vector(_x, _y, _z));
     }
 
 

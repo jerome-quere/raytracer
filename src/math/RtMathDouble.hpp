@@ -36,10 +36,15 @@ namespace Rt
       bool operator<(const Double&) const;
       bool operator>=(const Double&) const;
       bool operator>(const Double&) const;
-  
+
       Double pow(int) const;
       Double sqrt() const;
 
+      Double sin() const;
+      Double cos() const;
+
+      double value() const;
+  
       friend Double operator*(const double&, const Double&);
       friend std::ostream& operator<<(std::ostream&, const Double&);
 
@@ -51,6 +56,10 @@ namespace Rt
       mutable double            _square;
       mutable bool		_sqrtFill;
       mutable double            _sqrt;
+      mutable bool		_sinFill;
+      mutable double            _sin;
+      mutable bool		_cosFill;
+      mutable double            _cos;
     };
 
   }

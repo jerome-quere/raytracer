@@ -22,6 +22,7 @@ namespace Rt
       Vector(const Vector&);
       ~Vector();
       Vector& operator=(const Vector&);
+      Vector operator-() const;
 
       const Double& x() const;
       const Double& y() const;

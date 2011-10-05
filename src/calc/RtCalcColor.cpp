@@ -41,7 +41,7 @@ namespace Rt
       return (_blue);
     }
 
-    unsigned int  Color::color() const
+    unsigned int  Color::rgb() const
     {
       return (Color::colorFromRGB(_red, _green, _blue));
     }
@@ -61,7 +61,7 @@ namespace Rt
       _blue = blue;
     }
 
-    void Color::color(unsigned int color)
+    void Color::rgb(unsigned int color)
     {
       _red = Color::redFromColor(color);
       _green = Color::greenFromColor(color);

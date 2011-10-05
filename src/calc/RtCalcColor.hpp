@@ -18,12 +18,12 @@ namespace Rt
       unsigned char red() const;
       unsigned char green() const;
       unsigned char blue() const;
-      unsigned int  color() const;
+      unsigned int  rgb() const;
 
       void red(unsigned char red);
       void green(unsigned char green);
       void blue(unsigned char blue);
-      void color(unsigned int color);
+      void rgb(unsigned int color);
 
       static unsigned char redFromColor(unsigned int color);
       static unsigned char greenFromColor(unsigned int color);

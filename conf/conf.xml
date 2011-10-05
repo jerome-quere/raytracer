@@ -1,4 +1,18 @@
 <raytracer>
+  <width>10</width>
+  <height>10</height>
+  <eye>
+    <position>
+      <x>0</x>
+      <y>100</y>
+      <z>0</z>
+    </position>
+    <direction>
+      <x>0</x>
+      <y>-1</y>
+      <z>0</z>
+    </direction>
+  </eye>
   <objects>
     <object type="sphere">
       <center>
@@ -15,16 +29,4 @@
       <d>0</d>
     </object>
   </objects>
-  <eye>
-    <position>
-      <x>0</x>
-      <y>-200</y>
-      <z>0</z>
-    </position>
-    <direction>
-      <x>0</x>
-      <y>1</y>
-      <z>0</z>
-    </direction>
-  </eye>
 </raytracer>

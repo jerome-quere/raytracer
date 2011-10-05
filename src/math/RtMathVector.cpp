@@ -33,6 +33,11 @@ namespace Rt
       return (*this);
     }
 
+    Vector Vector::operator-() const
+    {
+      return (Vector(-_x, -_y, -_z));
+    }
+
     const Double& Vector::x() const
     {
       return (_x);

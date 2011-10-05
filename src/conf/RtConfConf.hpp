@@ -23,12 +23,19 @@ namespace Rt
       
       Conf& operator=(const Conf&);
       
-      int	imageWidth() const;
-      int	imageHeight() const;
+      unsigned int	imageWidth() const;
+      unsigned int	imageHeight() const;
+      bool		is3dEnable() const;
+      const Object::Eye& eye() const;
+      Object::Eye	leftEye();
+      Object::Eye	leftRight();
 
 
     private:
 
+      unsigned int			       _width;
+      unsigned int			       _height;
+      bool				       _3d;
       QSharedPointer<Object::Eye>	       _eye;
       QVector<QSharedPointer<Object::Object> > _objects;
 

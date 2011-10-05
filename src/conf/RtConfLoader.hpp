@@ -31,9 +31,14 @@ namespace Rt
     private:
       
       bool parse();
+      bool parseInt(const QDomElement&, int&);
       bool parseDouble(const QDomElement&, Math::Double&);
+      bool parseBool(const QDomElement&, bool&);
       bool parsePoint(const QDomElement&, Math::Point&);
       bool parseVector(const QDomElement&, Math::Vector&);
+      bool parseWidth(const QDomElement&);
+      bool parseHeight(const QDomElement&);
+      bool parse3d(const QDomElement&);
       bool parseEye(const QDomElement&);
       bool parseObjects(const QDomElement&);
       bool parseObject(const QDomElement&);

@@ -2,6 +2,7 @@
 #ifndef _RT_CALC_IMAGE_
 #define _RT_CALC_IMAGE_
 
+#include <QImage>
 #include "RtCalcColor.hpp"
 
 namespace Rt
@@ -18,9 +19,10 @@ namespace Rt
       unsigned int	width() const;
       unsigned int	height() const;
 
-      
       const Color*	operator[](int x) const;
       Color*		operator[](int x);
+
+      operator QImage() const;
 
     private:
       

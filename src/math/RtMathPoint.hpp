@@ -24,6 +24,10 @@ namespace Rt
       ~Point();
       Point& operator=(const Point&);
 
+      Double& x();
+      Double& y();
+      Double& z();
+
       const Double& x() const;
       const Double& y() const;
       const Double& z() const;
@@ -36,6 +40,8 @@ namespace Rt
       Point operator+(const Vector&) const;
       Point operator-(const Vector&) const;
       Vector operator-(const Point&) const;
+      
+      Vector toVector() const;
 
       friend std::ostream& operator<<(std::ostream&, const Point&);
 

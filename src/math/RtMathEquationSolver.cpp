@@ -12,7 +12,7 @@ namespace Rt
     QVector<Double> EquationSolver::secondDegree(const Double& a, const Double& b, const Double& c)
     {
       QVector<Double> solution;
-      Double delta = b.pow(2) - a * c * 4;
+      Double delta = b.pow(2) - a * c * Double(4);
       
       if (delta < 0)
 	{

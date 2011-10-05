@@ -23,6 +23,7 @@ namespace Rt
     public:
       Line();
       Line(const Point&, const Vector&);
+      Line(const Point&, const Point&);
       ~Line();
       Line(const Line&);
       Line& operator=(const Line&);

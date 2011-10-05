@@ -1,5 +1,6 @@
 
 #include <QFile>
+#include <QHash>
 
 #include "RtConfLoader.hpp"
 #include "RtMathDouble.hpp"
@@ -42,20 +43,67 @@ namespace Rt
 
      bool Loader::parse()
      {
-       QDomNode root = _document.documentElement();
-       QDomElement objects = root.toElement().elementsByTagName("objects").at(0).toElement();
-       QDomElement eye = root.toElement().elementsByTagName("eye").at(0).toElement();
+       QDomElement root = _document.documentElement().toElement();
 
-       if (!objects.isNull() && parseObjects(objects) &&
-	   !eye.isNull() && parseEye(eye))
+       QHash<QString, bool (Loader::*)(const QDomElement&) > actions;
+       actions["objects"] = &Loader::parseObjects;
+       actions["eye"] = &Loader::parseEye;
+       actions["width"] = &Loader::parseWidth;
+       actions["height"] = &Loader::parseHeight;
+       actions["3d"] = &Loader::parse3d;
+       QDomNodeList childs = root.childNodes();
+
+       for (unsigned int i = 0 ; i < childs.length() ; i++)
 	 {
-	   return (true);
-	 }
-       return (false);
+	   if (actions.find(childs.at(i).nodeName()) != actions.end())
+	     {
+	       bool (Loader::*t)(const QDomElement&) = actions[childs.at(i).nodeName()];
+	       if (!(this->*t)(childs.at(i).toElement()))
+		 {
+		   return (false);
+		 }
+	     }
+	 }       
+       return (true);
      }
+    
+    bool Loader::parseWidth(const QDomElement& width)
+    {
+      Math::Double w;
 
+      if (!parseDouble(width, w))
+	{
+	  return (false);
+	}
+      _conf._width = w.value();
+      return(true);
+    }
 
-     bool Loader::parseEye(const QDomElement& eye)
+    bool Loader::parseHeight(const QDomElement& height)
+    {
+      Math::Double h;
+
+      if (!parseDouble(height, h))
+	{
+	  return (false);
+	}
+      _conf._height = h.value();
+      return(true);
+    }    
+    
+    bool Loader::parse3d(const QDomElement& node)
+    {
+      bool enable;
+      
+      if (parseBool(node, enable))
+	{
+	  return (false);
+	}
+      _conf._3d = enable;
+      return (true);
+    }
+
+    bool Loader::parseEye(const QDomElement& eye)
      {
        QDomElement position = eye.elementsByTagName("position").at(0).toElement();
        QDomElement direction = eye.elementsByTagName("direction").at(0).toElement();
@@ -112,6 +160,19 @@ namespace Rt
       value = strtol(text.nodeValue().toStdString().c_str(), NULL, 10);
       return (true);
     }
+
+    bool Loader::parseBool(const QDomElement& node, bool& value)
+    {
+      QDomText text = node.firstChild().toText();
+
+      if (text.isNull())
+	{
+	  return (false);
+	}
+      value = (text.nodeValue() == "true") ? (true) : (false);
+      return (true);
+    }
+
 
     bool Loader::parsePoint(const QDomElement& node, Math::Point& point)
     {

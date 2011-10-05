@@ -1,5 +1,6 @@
 #include "RtGuiController.hpp"
 #include "RtConfLoader.hpp"
+#include "RtCalcGenerator.hpp"
 
 #include <iostream>
 
@@ -29,8 +30,11 @@ namespace Rt
       if (loader.load(path))
 	{
 	  _conf = loader.conf();
+	  Calc::Generator generator(_conf);	  
+	  generator.generate();
 	  return (true);
 	}
+      std::cout << "Parse Conf File Failed" << std::endl;
       return (false);
     }
 

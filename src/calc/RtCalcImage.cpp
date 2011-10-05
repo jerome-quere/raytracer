@@ -45,5 +45,21 @@ namespace Rt
       return _image[x];
     }
 
+    
+    Image::operator QImage() const
+    {
+      QImage image(_width, _height, QImage::Format_RGB32);
+      
+      image.fill(0x00000000);
+      for (unsigned int x = 0 ; x < _width ; x++)
+	{
+	  for (unsigned int y = 0 ; y < _height ; y++)
+	    {
+	      image.setPixel(x, y, _image[x][y].rgb());
+	    }
+	}
+      return (image);
+    }
+
   }
 }
