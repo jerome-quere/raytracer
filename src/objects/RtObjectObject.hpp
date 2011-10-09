@@ -2,6 +2,9 @@
 #ifndef _RT_OBJECT_OBJECT_
 #define _RT_OBJECT_OBJECT_
 
+#include "RtCalcColor.hpp"
+#include "RtMathObject.hpp"
+
 namespace Rt
 {
   namespace Object
@@ -10,7 +13,10 @@ namespace Rt
     {
     public:
 
-      int color() const;
+      Calc::Color color() const;
+      void	  color(const Calc::Color&);
+
+      virtual const Math::Object&	math() const = 0;
 
     protected:
       
@@ -18,7 +24,7 @@ namespace Rt
 
     private:
       
-      int	_color;
+      Calc::Color	_color;
     };
   }
 }

@@ -16,5 +16,10 @@ namespace Rt
     {
 
     }
+
+    const Math::Object&	Sphere::math() const
+    {
+      return(_sphere);
+    }
   }
 }

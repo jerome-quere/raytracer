@@ -1,15 +1,15 @@
 <raytracer>
-  <width>10</width>
-  <height>10</height>
+  <width>640</width>
+  <height>480</height>
   <eye>
     <position>
-      <x>0</x>
-      <y>100</y>
+      <x>-200</x>
+      <y>0</y>
       <z>0</z>
     </position>
     <direction>
-      <x>0</x>
-      <y>-1</y>
+      <x>1</x>
+      <y>0</y>
       <z>0</z>
     </direction>
   </eye>
@@ -21,12 +21,16 @@
 	<z>0</z>
       </center>
       <rayon>100</rayon>
+      <color>FF00FF</color>
     </object>
-    <object type="plane">
-      <a>0</a>
+
+    <object type="plan">
+      <a>1</a>
       <b>0</b>
-      <c>1</c>
-      <d>0</d>
+      <c>0</c>
+      <d>1000</d>
+      <color>FF00FF</color>
     </object>
+
   </objects>
 </raytracer>

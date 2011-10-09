@@ -20,6 +20,7 @@ HEADERS += src/calc/RtCalcCalculator.hpp                \
            src/calc/RtCalcColor.hpp                     \
            src/calc/RtCalcGenerator.hpp                 \
            src/calc/RtCalcImage.hpp                     \
+           src/calc/RtCalcIntersection.hpp              \
            src/calc/RtCalcThread.hpp                    \
            src/calc/RtCalcThreadEventListener.hpp       \
            src/calc/RtCalcThreadPool.hpp                \
@@ -49,6 +50,7 @@ SOURCES += src/calc/RtCalcCalculator.cpp                \
            src/calc/RtCalcColor.cpp                     \
            src/calc/RtCalcGenerator.cpp                 \
            src/calc/RtCalcImage.cpp                     \
+           src/calc/RtCalcIntersection.cpp              \
            src/calc/RtCalcThread.cpp                    \
            src/calc/RtCalcThreadEventListener.cpp       \
            src/calc/RtCalcThreadPool.cpp                \

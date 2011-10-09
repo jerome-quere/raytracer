@@ -36,14 +36,17 @@ namespace Rt
       bool parseBool(const QDomElement&, bool&);
       bool parsePoint(const QDomElement&, Math::Point&);
       bool parseVector(const QDomElement&, Math::Vector&);
+      bool parseColor(const QDomElement&, Calc::Color&);
       bool parseWidth(const QDomElement&);
       bool parseHeight(const QDomElement&);
       bool parse3d(const QDomElement&);
       bool parseEye(const QDomElement&);
       bool parseObjects(const QDomElement&);
+      bool parseObjectProperty(const QDomElement&, Object::Object*);
       bool parseObject(const QDomElement&);
-      bool parseSphere(const QDomElement&);
-      bool parsePlane(const QDomElement&);
+      bool parseObjectColor(const QDomElement&, Object::Object*); 
+      bool parseSphere(const QDomElement&, Object::Object*&);
+      bool parsePlane(const QDomElement&, Object::Object*&);
 
 
       QDomDocument    _document;

@@ -35,8 +35,6 @@ namespace Rt
       void point(const Point&);
       void vector(const Vector&);
       
-      QVector<Point> operator&(const Object&);
-
       friend std::ostream& operator<<(std::ostream&, const Line&);
 
     private:

@@ -15,6 +15,8 @@ namespace Rt
       
       Plane(const Math::Plane&);
       ~Plane();
+
+      const Math::Object&	math() const;
      
     private:
       

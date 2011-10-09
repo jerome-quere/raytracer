@@ -27,7 +27,7 @@ namespace Rt
       void center(const Point&);
       void rayon(const Double&);
       
-      virtual QVector<Point> operator&(const Line&) const;
+      virtual QVector<Point> intersection(const Line&) const;
 
 
       friend std::ostream& operator<<(std::ostream&, const Sphere&);

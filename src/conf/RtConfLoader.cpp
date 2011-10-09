@@ -134,20 +134,67 @@ namespace Rt
       return (true);
     }
     
+    bool Loader::parseObjectProperty(const QDomElement& object, Object::Object* ptr)
+    {
+      QHash<QString, bool (Loader::*)(const QDomElement&, Object::Object*) > actions;
+      actions["color"] = &Loader::parseObjectColor;
+      
+      QDomNodeList childs = object.childNodes();
+      
+      for (unsigned int i = 0 ; i < childs.length() ; i++)
+	{
+	  if (actions.find(childs.at(i).nodeName()) != actions.end())
+	    {
+	      bool (Loader::*t)(const QDomElement&, Object::Object*) = 
+		actions[childs.at(i).nodeName()];
+	       
+	      if (!(this->*t)(childs.at(i).toElement(), ptr))
+		 {
+		   return (false);
+		 }
+	     }
+	 }       
+       return (true);
+    }
+
     bool Loader::parseObject(const QDomElement& object)
     {
+      Object::Object*	ptr;
+      QHash<QString, bool (Loader::*)(const QDomElement&, Object::Object*&) > actions;
       QString type = object.attributes().namedItem("type").nodeValue();
-      
-      if (type == "sphere")
+
+      actions["sphere"] = &Loader::parseSphere;
+      actions["plane"] = &Loader::parsePlane;
+
+      if (actions.find(type) != actions.end())
+	 {
+	   bool (Loader::*t)(const QDomElement&, Object::Object*&) = actions[type];
+	   if (!(this->*t)(object, ptr))
+	     {
+	       return (false);
+	     }
+	 }      
+      if (!parseObjectProperty(object, ptr))
 	{
-	  return (parseSphere(object));
+	  return (false);
 	}
-      else if (type == "plane")
+       return (true);
+    }
+
+    bool Loader::parseObjectColor(const QDomElement& colorNode, Object::Object* ptr)
+    {
+      Calc::Color color;
+      
+      if (parseColor(colorNode, color))
 	{
-	  return (parsePlane(object));
+	  std::cout << color << std::endl;
+	  ptr->color(color);
+	  return (true);
 	}
       return (false);
     }
+
+
 
     bool Loader::parseDouble(const QDomElement& node, Math::Double& value)
     {
@@ -206,8 +253,34 @@ namespace Rt
       return (false);
     }
 
+    bool Loader::parseColor(const QDomElement& node, Calc::Color& color)
+    {
+      char code[3] = {0};
+      QDomText text = node.firstChild().toText();
 
-    bool Loader::parseSphere(const QDomElement& sphere)
+      if (text.isNull())
+	{
+	  return (false);
+	}
+      
+      QString value = text.nodeValue();
+      if (value.length() != 6)
+	{
+	  return (false);
+	}
+      code[0] = value[0].toAscii();
+      code[1] = value[1].toAscii();
+      color.red(strtol(code, NULL, 16));
+      code[0] = value[2].toAscii();
+      code[1] = value[3].toAscii();
+      color.green(strtol(code, NULL, 16));
+      code[0] = value[4].toAscii();
+      code[1] = value[5].toAscii();
+      color.blue(strtol(code, NULL, 16));
+      return (true);
+    }
+
+    bool Loader::parseSphere(const QDomElement& sphere, Object::Object*& ptr)
     {
       Math::Point  c;
       Math::Double r;
@@ -219,15 +292,15 @@ namespace Rt
 	{
 	  Math::Sphere s(c, r);
 	  std::cout << s << std::endl;
-	  QSharedPointer<Object::Object> object(new Object::Sphere(s));
-
+	  ptr = new Object::Sphere(s);
+	  QSharedPointer<Object::Object> object(ptr);
 	  _conf._objects.push_back(object);
 	  return (true);
 	}
       return (false);
     }
 
-    bool Loader::parsePlane(const QDomElement& plane)
+    bool Loader::parsePlane(const QDomElement& plane, Object::Object*& ptr)
     {
       Math::Double a, b, c, d;
       
@@ -241,7 +314,8 @@ namespace Rt
 	{
 	  Math::Plane p(a, b, c, d);
 	  std::cout << p << std::endl;
-	  QSharedPointer<Object::Object> object(new Object::Plane(p));
+	  ptr = new Object::Plane(p);
+	  QSharedPointer<Object::Object> object(ptr);
 	  
 	  _conf._objects.push_back(object);
 	  return (true);

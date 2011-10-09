@@ -15,6 +15,8 @@ namespace Rt
       
       Sphere(const Math::Sphere&);
       ~Sphere();
+      
+      const Math::Object&	math() const;
      
     private:
       

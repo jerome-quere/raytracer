@@ -4,9 +4,14 @@ namespace Rt
 {
   namespace Object
   {
-    int Object::color() const
+    Calc::Color Object::color() const
     {
       return (_color);
+    }
+
+    void	Object::color(const Calc::Color& color)
+    {
+      _color = color;
     }
 
     Object::Object() :
@@ -14,5 +19,7 @@ namespace Rt
     {
     }
     
+
+
   }
 }

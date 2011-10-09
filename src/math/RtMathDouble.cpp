@@ -147,7 +147,7 @@ namespace Rt
 	  _square = _value * _value;
 	  _squareFill = true;
 	}
-      return _squareFill;
+      return _square;
     }
 
     Double Double::sqrt() const

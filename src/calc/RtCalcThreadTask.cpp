@@ -1,4 +1,5 @@
 #include "RtCalcThreadTask.hpp"
+#include "RtCalcCalculator.hpp"
 
 namespace Rt
 {
@@ -14,7 +15,7 @@ namespace Rt
 
     void	ThreadTask::run()
     {
-      _color = Color(255, 0, 0);
+      _color = Calculator::pixelColor(_conf, _line);
     }
     
     void	ThreadTask::lastTask(bool b)

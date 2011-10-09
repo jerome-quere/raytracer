@@ -33,7 +33,7 @@ namespace Rt
       void c(const Double&);
       void d(const Double&);
 
-      virtual QVector<Point> operator&(const Line&) const;
+      virtual QVector<Point> intersection(const Line&) const;
 
       friend std::ostream& operator<<(std::ostream& stream, const Rt::Math::Plane&);
 

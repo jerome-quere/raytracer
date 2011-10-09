@@ -21,6 +21,8 @@ namespace Rt
       const Image& generate();
       void	   generate(Image&, const Object::Eye&);
       
+      const Image& image() const;
+      
     private slots:
 
       void onThreadPoolDone();

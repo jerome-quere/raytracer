@@ -46,7 +46,7 @@ namespace Rt
     }
 
     
-    Image::operator QImage() const
+    QImage              Image::toQImage() const
     {
       QImage image(_width, _height, QImage::Format_RGB32);
       

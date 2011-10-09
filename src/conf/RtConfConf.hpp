@@ -15,8 +15,12 @@ namespace Rt
     {
       friend class Loader;
       
-
     public:
+
+      typedef QVector<QSharedPointer<Object::Object> >::const_iterator ObjectIterator;
+
+
+
       Conf();
       Conf(const Conf&);
       ~Conf();
@@ -29,7 +33,10 @@ namespace Rt
       const Object::Eye& eye() const;
       Object::Eye	leftEye();
       Object::Eye	leftRight();
-
+      
+      ObjectIterator	objectBegin() const;
+      ObjectIterator	objectEnd() const;
+      
 
     private:
 

@@ -105,7 +105,7 @@ namespace Rt
       _d = d;
     }
     
-    QVector<Point> Plane::operator&(const Line&line) const
+    QVector<Point> Plane::intersection(const Line&line) const
     {
       QVector<Point> points;
       Double solution;

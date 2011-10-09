@@ -91,24 +91,25 @@ namespace Rt
       unsigned int color;
       unsigned char * ptr = (unsigned char*)(&color);
 
-      ptr[1] = red;
-      ptr[2] = green;;
-      ptr[3] = blue;
+      ptr[3] = 0xff;
+      ptr[2] = red;
+      ptr[1] = green;;
+      ptr[0] = blue;
       return (color);
     }
 
     std::ostream& operator<<(std::ostream& stream, const Color& color)
     {
-      stream << "0x00" << std::hex;
+      stream << "0x" << std::hex;
       if (color._red < 0x10)
 	stream << "0";
-      stream << color._red;
+      stream << (int)color._red;
       if (color._green < 0x10)
 	stream << "0";
-      stream << color._green;
+      stream << (int)color._green;
       if (color._blue < 0x10)
 	stream << "0";
-      stream << color._blue;
+      stream << (int)color._blue;
       stream << std::dec;
       return (stream);
     }

@@ -13,5 +13,11 @@ namespace Rt
     Plane::~Plane()
     {
     }
+
+    const Math::Object&	Plane::math() const
+    {
+      return (_plane);
+    }
+
   }
 }

@@ -75,11 +75,6 @@ namespace Rt
       _vector = vector;
     }
     
-    QVector<Point> Line::operator&(const Object& obj)
-    {
-      return (obj & *this);
-    }
-
     std::ostream& operator<<(std::ostream& stream, const Line& obj)
     {
       stream << "Line{" << obj._point << ", " << obj._vector << "}";

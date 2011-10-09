@@ -53,5 +53,15 @@ namespace Rt
       return (*(_eye.data()));
     }
 
+    Conf::ObjectIterator	Conf::objectBegin() const
+    {
+      return (_objects.begin());
+    }
+
+    Conf::ObjectIterator	Conf::objectEnd() const
+    {
+      return (_objects.end());
+    }    
+
   }
 }

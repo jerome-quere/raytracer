@@ -14,7 +14,7 @@ namespace Rt
     class Object
     {
     public:
-      virtual QVector<Point> operator&(const Line&) const = 0;
+      virtual QVector<Point> intersection(const Line&) const = 0;
     };
    
   }

@@ -23,6 +23,7 @@ namespace Rt
       ~Vector();
       Vector& operator=(const Vector&);
       Vector operator-() const;
+      Double operator*(const Vector&) const;
 
       const Double& x() const;
       const Double& y() const;
@@ -32,14 +33,20 @@ namespace Rt
       Vector& y(const Double&);
       Vector& z(const Double&);
       Vector& setXYZ(const Double&, const Double&, const Double&);
+
+      const Double& norm() const;
   
       friend std::ostream& operator<<(std::ostream&, const Vector&);
 
 
     private:
+      
       Double _x;
       Double _y;
       Double _z;
+
+      mutable bool   _normFill;
+      mutable Double _norm;
     };
 
   }

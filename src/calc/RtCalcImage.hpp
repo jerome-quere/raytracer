@@ -22,7 +22,7 @@ namespace Rt
       const Color*	operator[](int x) const;
       Color*		operator[](int x);
 
-      operator QImage() const;
+      QImage toQImage() const;
 
     private:
       
