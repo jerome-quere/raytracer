@@ -5,8 +5,10 @@
 TEMPLATE = app
 TARGET = rt
 
+CONFIG += debug
+
 DEPENDPATH += . src/conf src/gui src/main src/math src/objects
-INCLUDEPATH += . src/conf src/calc src/gui src/math src/objects
+INCLUDEPATH += . src/conf src/calc src/effect src/gui src/math src/objects
 
 QT += xml
 
@@ -14,7 +16,7 @@ OBJECTS_DIR = ./objects/
 MOC_DIR     = ./mocs/
 UI_DIR      = ./mocs/
 
-CXXFLAGS += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++0x
 
 HEADERS += src/calc/RtCalcCalculator.hpp                \
            src/calc/RtCalcColor.hpp                     \
@@ -27,9 +29,13 @@ HEADERS += src/calc/RtCalcCalculator.hpp                \
            src/calc/RtCalcThreadTask.hpp                \
            src/conf/RtConfConf.hpp                      \
            src/conf/RtConfLoader.hpp                    \
+           src/effect/RtEffectEffect.hpp                \
+           src/effect/RtEffectLight.hpp                 \
+           src/effect/RtEffectReflexion.hpp             \
            src/gui/RtGuiConfFileDialog.hpp              \
            src/gui/RtGuiController.hpp                  \
            src/gui/RtGuiMainWindow.hpp                  \
+           src/math/RtMathConstant.hpp                  \
            src/math/RtMathDouble.hpp                    \
            src/math/RtMathEquationSolver.hpp            \
            src/math/RtMathLine.hpp                      \
@@ -40,6 +46,7 @@ HEADERS += src/calc/RtCalcCalculator.hpp                \
            src/math/RtMathTransformation.hpp            \
            src/math/RtMathVector.hpp                    \
            src/objects/RtObjectEye.hpp                  \
+           src/objects/RtObjectLight.hpp                \
            src/objects/RtObjectObject.hpp               \
            src/objects/RtObjectPlane.hpp                \
            src/objects/RtObjectSphere.hpp               \
@@ -57,6 +64,8 @@ SOURCES += src/calc/RtCalcCalculator.cpp                \
            src/calc/RtCalcThreadTask.cpp                \
            src/conf/RtConfConf.cpp                      \
            src/conf/RtConfLoader.cpp                    \
+           src/effect/RtEffectLight.cpp                 \
+           src/effect/RtEffectReflexion.cpp             \
            src/gui/RtGuiConfFileDialog.cpp              \
            src/gui/RtGuiController.cpp                  \
            src/gui/RtGuiMainWindow.cpp                  \
@@ -64,12 +73,14 @@ SOURCES += src/calc/RtCalcCalculator.cpp                \
            src/math/RtMathDouble.cpp                    \
            src/math/RtMathEquationSolver.cpp            \
            src/math/RtMathLine.cpp                      \
+           src/math/RtMathObject.cpp                    \
            src/math/RtMathPlane.cpp                     \
            src/math/RtMathPoint.cpp                     \
            src/math/RtMathSphere.cpp                    \
            src/math/RtMathTransformation.cpp            \
            src/math/RtMathVector.cpp                    \
            src/objects/RtObjectEye.cpp                  \
+           src/objects/RtObjectLight.cpp                \
            src/objects/RtObjectObject.cpp               \
            src/objects/RtObjectPlane.cpp                \
            src/objects/RtObjectSphere.cpp               \

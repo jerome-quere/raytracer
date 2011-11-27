@@ -32,9 +32,9 @@ namespace Rt
 	  return false;
 	}
       file.close();
-      return (parse()); 
+      return (parse());
     }
-    
+
     Conf  Loader::conf() const
     {
       return (_conf);
@@ -47,6 +47,7 @@ namespace Rt
 
        QHash<QString, bool (Loader::*)(const QDomElement&) > actions;
        actions["objects"] = &Loader::parseObjects;
+       actions["lights"] = &Loader::parseLights;
        actions["eye"] = &Loader::parseEye;
        actions["width"] = &Loader::parseWidth;
        actions["height"] = &Loader::parseHeight;
@@ -63,10 +64,10 @@ namespace Rt
 		   return (false);
 		 }
 	     }
-	 }       
+	 }
        return (true);
      }
-    
+
     bool Loader::parseWidth(const QDomElement& width)
     {
       Math::Double w;
@@ -89,12 +90,12 @@ namespace Rt
 	}
       _conf._height = h.value();
       return(true);
-    }    
-    
+    }
+
     bool Loader::parse3d(const QDomElement& node)
     {
       bool enable;
-      
+
       if (parseBool(node, enable))
 	{
 	  return (false);
@@ -123,7 +124,7 @@ namespace Rt
     bool Loader::parseObjects(const QDomElement& objects)
     {
       QDomNodeList nodesList = objects.childNodes();
-      
+
       for (unsigned int i = 0 ; i < nodesList.length() ; i++)
 	{
 	  if (!parseObject(nodesList.at(i).toElement()))
@@ -133,27 +134,41 @@ namespace Rt
 	}
       return (true);
     }
-    
+
+    bool Loader::parseLights(const QDomElement& objects)
+    {
+      QDomNodeList nodesList = objects.childNodes();
+
+      for (unsigned int i = 0 ; i < nodesList.length() ; i++)
+	{
+	  if (!parseLight(nodesList.at(i).toElement()))
+	    {
+	      return (false);
+	    }
+	}
+      return (true);
+    }
+
+
     bool Loader::parseObjectProperty(const QDomElement& object, Object::Object* ptr)
     {
       QHash<QString, bool (Loader::*)(const QDomElement&, Object::Object*) > actions;
       actions["color"] = &Loader::parseObjectColor;
-      
+      actions["shininess"] = &Loader::parseObjectShininess;
+      actions["reflexion"] = &Loader::parseObjectReflexion;
       QDomNodeList childs = object.childNodes();
-      
       for (unsigned int i = 0 ; i < childs.length() ; i++)
 	{
 	  if (actions.find(childs.at(i).nodeName()) != actions.end())
 	    {
 	      bool (Loader::*t)(const QDomElement&, Object::Object*) = 
 		actions[childs.at(i).nodeName()];
-	       
 	      if (!(this->*t)(childs.at(i).toElement(), ptr))
 		 {
 		   return (false);
 		 }
 	     }
-	 }       
+	 }
        return (true);
     }
 
@@ -161,10 +176,11 @@ namespace Rt
     {
       Object::Object*	ptr;
       QHash<QString, bool (Loader::*)(const QDomElement&, Object::Object*&) > actions;
-      QString type = object.attributes().namedItem("type").nodeValue();
 
+      QString type = object.attributes().namedItem("type").nodeValue();
       actions["sphere"] = &Loader::parseSphere;
-      actions["plane"] = &Loader::parsePlane;
+      actions["plan"] = &Loader::parsePlane;
+
 
       if (actions.find(type) != actions.end())
 	 {
@@ -173,7 +189,7 @@ namespace Rt
 	     {
 	       return (false);
 	     }
-	 }      
+	 }
       if (!parseObjectProperty(object, ptr))
 	{
 	  return (false);
@@ -181,20 +197,65 @@ namespace Rt
        return (true);
     }
 
-    bool Loader::parseObjectColor(const QDomElement& colorNode, Object::Object* ptr)
+    bool Loader::parseLight(const QDomElement& light)
     {
-      Calc::Color color;
-      
-      if (parseColor(colorNode, color))
+      Math::Point  pos;
+      Math::Double inte;
+      Calc::Color  col;
+
+      QDomElement position = light.elementsByTagName("position").at(0).toElement();
+      QDomElement intensity = light.elementsByTagName("intensity").at(0).toElement();
+      QDomElement color = light.elementsByTagName("color").at(0).toElement();
+
+      if (parsePoint(position, pos) && parseDouble(intensity, inte) &&
+	  parseColor(color, col))
 	{
-	  std::cout << color << std::endl;
-	  ptr->color(color);
+	  std::cout << "Light " << pos << " " << inte << " " << col << std::endl;
+	  QSharedPointer<Object::Light> object(new Object::Light(pos, inte, col));
+	  _conf._lights.push_back(object);
 	  return (true);
 	}
       return (false);
     }
 
 
+    bool Loader::parseObjectColor(const QDomElement& colorNode, Object::Object* ptr)
+    {
+      Calc::Color color;
+
+      if (parseColor(colorNode, color))
+	{
+	  ptr->color(color);
+	  return (true);
+	}
+      return (false);
+    }
+
+    bool Loader::parseObjectShininess(const QDomElement& colorNode,
+				      Object::Object* ptr)
+    {
+      Math::Double shininess;
+
+      if (parseDouble(colorNode, shininess))
+	{
+	  ptr->shininess(shininess);
+	  return (true);
+	}
+      return (false);
+    }
+
+    bool Loader::parseObjectReflexion(const QDomElement& colorNode,
+				      Object::Object* ptr)
+    {
+      Math::Double reflexion;
+
+      if (parseDouble(colorNode, reflexion))
+	{
+	  ptr->reflexion(reflexion);
+	  return (true);
+	}
+      return (false);
+    }
 
     bool Loader::parseDouble(const QDomElement& node, Math::Double& value)
     {
@@ -204,7 +265,7 @@ namespace Rt
 	{
 	  return (false);
 	}
-      value = strtol(text.nodeValue().toStdString().c_str(), NULL, 10);
+      value = strtod(text.nodeValue().toStdString().c_str(), NULL);
       return (true);
     }
 
@@ -228,7 +289,7 @@ namespace Rt
       QDomElement xNode = node.elementsByTagName("x").at(0).toElement();
       QDomElement yNode = node.elementsByTagName("y").at(0).toElement();
       QDomElement zNode = node.elementsByTagName("z").at(0).toElement();
-      
+
       if (parseDouble(xNode, x) && parseDouble(yNode, y) && parseDouble(zNode, z))
 	{
 	  point.setXYZ(x, y, z);
@@ -236,7 +297,7 @@ namespace Rt
 	}
       return (false);
     }
-    
+
     bool Loader::parseVector(const QDomElement& node, Math::Vector& vector)
     {
       Math::Double x, y, z;
@@ -244,7 +305,7 @@ namespace Rt
       QDomElement xNode = node.elementsByTagName("x").at(0).toElement();
       QDomElement yNode = node.elementsByTagName("y").at(0).toElement();
       QDomElement zNode = node.elementsByTagName("z").at(0).toElement();
-      
+
       if (parseDouble(xNode, x) && parseDouble(yNode, y) && parseDouble(zNode, z))
 	{
 	  vector.setXYZ(x, y, z);
@@ -262,7 +323,7 @@ namespace Rt
 	{
 	  return (false);
 	}
-      
+
       QString value = text.nodeValue();
       if (value.length() != 6)
 	{
@@ -287,7 +348,7 @@ namespace Rt
 
       QDomElement center = sphere.elementsByTagName("center").at(0).toElement();
       QDomElement rayon = sphere.elementsByTagName("rayon").at(0).toElement();
-      
+
       if (parsePoint(center, c) && parseDouble(rayon, r))
 	{
 	  Math::Sphere s(c, r);
@@ -303,12 +364,12 @@ namespace Rt
     bool Loader::parsePlane(const QDomElement& plane, Object::Object*& ptr)
     {
       Math::Double a, b, c, d;
-      
+
       QDomElement aNode = plane.elementsByTagName("a").at(0).toElement();
       QDomElement bNode = plane.elementsByTagName("b").at(0).toElement();
       QDomElement cNode = plane.elementsByTagName("c").at(0).toElement();
       QDomElement dNode = plane.elementsByTagName("d").at(0).toElement();
-      
+
       if (parseDouble(aNode, a) && parseDouble(bNode, b) && 
 	  parseDouble(cNode, c) && parseDouble(dNode, d))
 	{
@@ -316,11 +377,11 @@ namespace Rt
 	  std::cout << p << std::endl;
 	  ptr = new Object::Plane(p);
 	  QSharedPointer<Object::Object> object(ptr);
-	  
+
 	  _conf._objects.push_back(object);
 	  return (true);
 	}
       return (false);
-    }    
+    }
   }
 }

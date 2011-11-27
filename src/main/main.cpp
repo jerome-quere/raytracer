@@ -11,17 +11,23 @@
 int main(int argc, char** argv)
 {
   QApplication app(argc, argv);
- 
 
-  //Rt::Gui::Controller controller;
-  
+
+ //Rt::Gui::Controller controller;
+
   Rt::Conf::Loader loader;
+
+  std::cout << "####### Create Conf" << std::endl;
   loader.load("conf/conf.xml");
-  Rt::Conf::Conf conf = loader.conf();  
+
+  Rt::Conf::Conf conf = loader.conf();
+
+  std::cout << "####### Begin Generate" << std::endl;
   Rt::Calc::Generator g(conf);
+
   g.generate();
   QImage image = g.image().toQImage();
-  
+
   image.save("test.jpg", NULL, 100);
 
   return (app.exec());

@@ -34,7 +34,6 @@ namespace Rt
       return (_height);
     }
 
-    
     const Color*	Image::operator[](int x) const
     {
       return _image[x];
@@ -45,11 +44,10 @@ namespace Rt
       return _image[x];
     }
 
-    
     QImage              Image::toQImage() const
     {
       QImage image(_width, _height, QImage::Format_RGB32);
-      
+
       image.fill(0x00000000);
       for (unsigned int x = 0 ; x < _width ; x++)
 	{

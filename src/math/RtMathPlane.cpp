@@ -1,3 +1,14 @@
+/*****************************************************************************
+ *                                                                           *
+ *  This file is part of the project raytracer.                              *
+ *  Made by Jerome Quere < contact@jeromequere.fr >                          *
+ *  Created on     11/24/11 15:29:07                                         *
+ *  Last update on 11/25/11 21:22:00                                         *
+ *                                                                           *
+ *****************************************************************************/
+
+
+#include <sstream>
 
 #include "RtMathLine.hpp"
 #include "RtMathPlane.hpp"
@@ -84,7 +95,7 @@ namespace Rt
     {
       return _d;
     }
-    
+
     void Plane::a(const Double& a)
     {
       _a = a;
@@ -104,13 +115,13 @@ namespace Rt
     {
       _d = d;
     }
-    
+
     QVector<Point> Plane::intersection(const Line&line) const
     {
       QVector<Point> points;
       Double solution;
       Double div = _a * line.vector().x() + _b * line.vector().y() + _c * line.vector().z();
-      
+
       if (div == 0)
 	{
 	  return (points);
@@ -122,11 +133,18 @@ namespace Rt
       return (points);
     }
 
-    std::ostream& operator<<(std::ostream& stream, const Rt::Math::Plane& plane)
+    Vector   Plane::normalVector(const Point&) const
     {
-      stream << "Plane {a:" << plane._a << " b:" << plane._b 
-	     << " c:" << plane._c << " d:" << plane._d << "} ";
-      return (stream);
+      return (Vector(_a, _b, _c));
+    }
+
+    std::string Plane::toString() const
+    {
+      std::stringstream stream;
+
+     stream << "Plane {a:" << _a << " b:" << _b
+	     << " c:" << _c << " d:" << _d << "} ";
+     return (stream.str());
     }
   }
 }

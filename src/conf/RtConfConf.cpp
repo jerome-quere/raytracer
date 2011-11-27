@@ -9,7 +9,7 @@ namespace Rt
       _3d(false)
     {
     }
-    
+
     Conf::Conf(const Conf& obj)
     {
       operator=(obj);
@@ -22,6 +22,7 @@ namespace Rt
     Conf& Conf::operator=(const Conf& obj)
     {
       _objects = obj._objects;
+      _lights = obj._lights;
       _eye = obj._eye;
       _width = obj._width;
       _height = obj._height;
@@ -61,7 +62,17 @@ namespace Rt
     Conf::ObjectIterator	Conf::objectEnd() const
     {
       return (_objects.end());
-    }    
+    }
+
+    Conf::LightIterator		Conf::lightBegin() const
+    {
+      return (_lights.begin());
+    }
+
+    Conf::LightIterator		Conf::lightEnd() const
+    {
+      return (_lights.end());
+    }
 
   }
 }

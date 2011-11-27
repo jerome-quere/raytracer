@@ -17,7 +17,7 @@ namespace Rt
     {
       _color = Calculator::pixelColor(_conf, _line);
     }
-    
+
     void	ThreadTask::lastTask(bool b)
     {
       _lastTask = b;

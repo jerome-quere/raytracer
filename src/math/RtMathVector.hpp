@@ -6,7 +6,7 @@
 
 namespace Rt
 {
-  
+
   namespace Math
   {
 
@@ -23,24 +23,27 @@ namespace Rt
       ~Vector();
       Vector& operator=(const Vector&);
       Vector operator-() const;
+      Vector operator-(const Vector&) const;
       Double operator*(const Vector&) const;
+      Vector operator*(const Double&) const;
+      Vector operator/(const Double&) const;
 
       const Double& x() const;
       const Double& y() const;
       const Double& z() const;
-  
+
       Vector& x(const Double&);
       Vector& y(const Double&);
       Vector& z(const Double&);
       Vector& setXYZ(const Double&, const Double&, const Double&);
 
       const Double& norm() const;
-  
+      Double alpha(const Vector&) const;
+
       friend std::ostream& operator<<(std::ostream&, const Vector&);
 
-
     private:
-      
+
       Double _x;
       Double _y;
       Double _z;

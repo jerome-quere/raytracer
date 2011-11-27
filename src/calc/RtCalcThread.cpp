@@ -12,7 +12,7 @@ namespace Rt
     {
 
     }
-    
+
     Thread::~Thread()
     {
       delete _listener;

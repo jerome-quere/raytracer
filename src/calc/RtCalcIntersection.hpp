@@ -12,10 +12,10 @@ namespace Rt
     class Intersection
     {
     public:
-      
+
       Intersection();
       ~Intersection();
-      
+
       Intersection(Object::Object*, const Math::Line&, const Math::Point&);
       Intersection(const Intersection&);
 

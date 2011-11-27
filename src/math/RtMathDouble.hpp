@@ -20,12 +20,13 @@ namespace Rt
       static const double error_margin;
 
     public:
-      Double(double value = 0);
+      Double(const double value = 0);
       ~Double();
       Double(const Double&);
       Double& operator=(const Double&);
       Double& operator=(const double& value);
       Double operator+(const Double&) const;
+      Double& operator+=(const Double&);
       Double operator-(const Double&) const;
       Double operator-() const;
       Double operator/(const Double&) const;

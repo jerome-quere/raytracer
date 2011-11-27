@@ -15,7 +15,7 @@ namespace Rt
 
       Image(unsigned int with, unsigned int height);
       ~Image();
-      
+
       unsigned int	width() const;
       unsigned int	height() const;
 
@@ -25,11 +25,11 @@ namespace Rt
       QImage toQImage() const;
 
     private:
-      
+
       unsigned int	_width;
       unsigned int	_height;
       Color**		_image;	
-      
+
     };
   }
 }

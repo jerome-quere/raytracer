@@ -12,16 +12,16 @@ namespace Rt
     class Sphere : public Object
     {
     public:
-      
+
       Sphere(const Math::Sphere&);
       ~Sphere();
-      
+
       const Math::Object&	math() const;
-     
+
     private:
-      
+
       Math::Sphere	_sphere;
-      
+
     };
   }
 }

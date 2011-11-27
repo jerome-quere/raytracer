@@ -4,7 +4,7 @@ namespace Rt
 {
   namespace Object
   {
-    Calc::Color Object::color() const
+    const Calc::Color& Object::color() const
     {
       return (_color);
     }
@@ -14,12 +14,29 @@ namespace Rt
       _color = color;
     }
 
+    const Math::Double& Object::shininess() const
+    {
+      return (_shininess);
+    }
+
+    void  Object::shininess(const Math::Double& value)
+    {
+      _shininess = value;
+    }
+
+    const Math::Double& Object::reflexion() const
+    {
+      return (_reflexion);
+    }
+
+    void  Object::reflexion(const Math::Double& value)
+    {
+      _reflexion = value;
+    }
+
     Object::Object() :
       _color(0)
     {
     }
-    
-
-
   }
 }

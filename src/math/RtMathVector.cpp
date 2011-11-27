@@ -44,9 +44,24 @@ namespace Rt
       return (Vector(-_x, -_y, -_z));
     }
 
+    Vector Vector::operator-(const Vector& obj) const
+    {
+      return (Vector(_x - obj._x, _y - obj._y, _z - obj._z));
+    }
+
     Double Vector::operator*(const Vector& obj) const
     {
       return (_x * obj._x + _y * obj._y + _z * obj._z);
+    }
+
+    Vector Vector::operator*(const Double& mult) const
+    {
+      return (Vector(_x * mult, _y * mult, _z * mult));
+    }
+
+    Vector Vector::operator/(const Double& div) const
+    {
+      return (Vector(_x / div, _y / div, _z / div));
     }
 
     const Double& Vector::x() const
@@ -98,6 +113,15 @@ namespace Rt
 	  _normFill = true;
 	}
       return (_norm);
+    }
+
+    Double Vector::alpha(const Vector& vec) const
+    {
+      Double scal = *this * vec;
+
+      scal = scal / norm();
+      scal = scal / vec.norm();
+      return (acos(scal.value()));
     }
 
     std::ostream& operator<<(std::ostream& stream, const Vector& obj)

@@ -1,4 +1,6 @@
 
+#include <sstream>
+
 #include "RtMathSphere.hpp"
 #include "RtMathLine.hpp"
 #include "RtMathVector.hpp"
@@ -40,7 +42,7 @@ namespace Rt
     {
       return _rayon;
     }
-    
+
     const Point& Sphere::center() const
     {
       return _center;
@@ -50,7 +52,7 @@ namespace Rt
     {
       return  _rayon;
     }
-    
+
     void Sphere::center(const Point& center)
     {
       _center = center;
@@ -86,12 +88,21 @@ namespace Rt
       return (points);
     }
 
-    std::ostream& operator<<(std::ostream& stream, const Sphere& sphere)
+    Vector  Sphere::normalVector(const Point& point) const
     {
-      stream << "Sphere {center: " << sphere._center << " rayon: " << sphere._rayon << "} ";
-      return (stream);
+      return (point - _center);
     }
 
+    std::string Sphere::toString() const
+    {
+      std::stringstream stream;
+
+      stream << "Sphere {center: "
+	     << _center
+	     << " rayon: "
+	     << _rayon << "} ";
+
+      return (stream.str());
+    }
   }
-  
 }

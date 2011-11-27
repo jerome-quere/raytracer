@@ -19,7 +19,7 @@ namespace Rt
 	}
       connect(&_threadPool, SIGNAL(done()), SLOT(onThreadPoolDone()));
     }
-    
+
     const Image& Generator::generate()
     {
       generate(_image, _conf.eye());
@@ -31,7 +31,7 @@ namespace Rt
       ThreadTask* task;
       Math::Point screen;
       Math::Line  line;
-      
+
       for (unsigned int x = 0 ; x < image.width() ; x++)
 	{
 	  for (unsigned int y = 0 ; y < image.height() ; y++)
@@ -52,7 +52,7 @@ namespace Rt
     {
       return (_image);
     }
-    
+
     void	 Generator::onThreadPoolDone()
     {
       std::cout << "Done" << std::endl;

@@ -13,9 +13,9 @@ namespace Rt
     class ThreadTask
     {
     public:
-      
+
       ThreadTask(const Math::Line&, const Conf::Conf&, Color&);
-      
+
       void	run();
       void	lastTask(bool);
       bool       lastTask() const;

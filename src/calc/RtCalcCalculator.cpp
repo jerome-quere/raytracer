@@ -2,27 +2,42 @@
 #include "RtCalcCalculator.hpp"
 #include "RtMathTransformation.hpp"
 #include "RtCalcIntersection.hpp"
+#include "RtEffectLight.hpp"
+#include "RtEffectReflexion.hpp"
+
+#include <QDebug>
 namespace Rt
 {
   namespace Calc
   {
-    Math::Point	Calculator::screenPoint(const Object::Eye& eye, 
-					unsigned int width, 
-					unsigned int height, 
+    Math::Point	Calculator::screenPoint(const Object::Eye& eye,
+					unsigned int width,
+					unsigned int height,
 					unsigned int x,
 					unsigned int y)
     {
       Math::Point p;
       Math::Transformation trans(eye.position().toVector(), 0, -eye.yAlpha(), -eye.zAlpha());      
-      
-      p.x() = 100;
+
+      p.x() = width / 2;
       p.y() = -((int)width / 2) + (int)x;
       p.z() = ((int)height / 2) - (int)y;
 
       p = trans.apply(p);
       return (p);
     }
- 
+
+    Color Calculator::calcEffect(const Conf::Conf& conf,
+				 const Intersection& intersection)
+    {
+      Effect::Light  effect(conf);
+      Effect::Reflexion reflexion(conf);
+
+      return (reflexion.apply(intersection,
+			   effect.apply(intersection,
+					intersection.object()->color())));
+    }
+
     Color Calculator::pixelColor(const Conf::Conf& conf, const Math::Line& line)
     {
       Intersection intersection;
@@ -30,7 +45,7 @@ namespace Rt
       intersection = closestObject(conf, line);
       if (!intersection.empty())
 	{
-	  return (intersection.object()->color());
+	  return (calcEffect(conf, intersection));
 	}
       return (Color());
     }
@@ -52,8 +67,8 @@ namespace Rt
 	  for (int i = 0 ; i < inter.size() ; i++)
 	    {
 	      interVector = inter[i] - line.point();
-	      
-	      if (interVector * line.vector() > 0 && 
+
+	      if (interVector * line.vector() > 0 &&
 		  (closestDistance < 0 || interVector.norm() < closestDistance))
 		{
 		  closestDistance = interVector.norm();

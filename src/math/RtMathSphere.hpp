@@ -12,7 +12,7 @@ namespace Rt
     class Sphere : public Object
     {
     public:
-      
+
       Sphere(const Point&, const Double&);
       ~Sphere();
       Sphere(const Sphere&);
@@ -26,17 +26,16 @@ namespace Rt
 
       void center(const Point&);
       void rayon(const Double&);
-      
+
       virtual QVector<Point> intersection(const Line&) const;
+      virtual Vector	     normalVector(const Point&) const;
+      virtual std::string    toString() const;
 
-
-      friend std::ostream& operator<<(std::ostream&, const Sphere&);
-      
     private:
 
       Point	_center;
       Double	_rayon;
-      
+
     };
   }
 

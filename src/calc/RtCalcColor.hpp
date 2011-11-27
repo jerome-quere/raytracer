@@ -3,6 +3,7 @@
 #define _RT_CALC_COLOR_
 
 #include <iostream>
+#include "RtMathDouble.hpp"
 
 namespace Rt
 {
@@ -14,7 +15,7 @@ namespace Rt
       Color();
       Color(unsigned int color);
       Color(unsigned char red, unsigned char green, unsigned char blue);
-      
+
       unsigned char red() const;
       unsigned char green() const;
       unsigned char blue() const;
@@ -25,11 +26,14 @@ namespace Rt
       void blue(unsigned char blue);
       void rgb(unsigned int color);
 
+      Color operator*(const Math::Double&) const;
+      Color operator+(const Color&) const;
+
       static unsigned char redFromColor(unsigned int color);
       static unsigned char greenFromColor(unsigned int color);
       static unsigned char blueFromColor(unsigned int color);
       static unsigned int colorFromRGB(unsigned char red, unsigned char green, unsigned char blue);
-      
+
       friend std::ostream& operator<<(std::ostream& stream, const Color&);
 
     private:

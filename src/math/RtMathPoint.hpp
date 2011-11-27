@@ -31,16 +31,16 @@ namespace Rt
       const Double& x() const;
       const Double& y() const;
       const Double& z() const;
-  
+
       Point& x(const Double&);
       Point& y(const Double&);
       Point& z(const Double&);
       Point& setXYZ(const Double&, const Double&, const Double&);
-  
+
       Point operator+(const Vector&) const;
       Point operator-(const Vector&) const;
       Vector operator-(const Point&) const;
-      
+
       Vector toVector() const;
 
       friend std::ostream& operator<<(std::ostream&, const Point&);

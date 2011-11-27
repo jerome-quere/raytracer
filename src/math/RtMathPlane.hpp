@@ -11,18 +11,18 @@ namespace Rt
     class Plane : public Object
     {
     public:
-      
+
       Plane();
       Plane(const Double&, const Double&, const Double&, const Double&);
       ~Plane();
       Plane(const Plane&);
       Plane& operator=(const Plane&);
-      
+
       Double& a();
       Double& b();
       Double& c();
       Double& d();
-      
+
       const Double& a() const;
       const Double& b() const;
       const Double& c() const;
@@ -34,8 +34,8 @@ namespace Rt
       void d(const Double&);
 
       virtual QVector<Point> intersection(const Line&) const;
-
-      friend std::ostream& operator<<(std::ostream& stream, const Rt::Math::Plane&);
+      virtual Vector	     normalVector(const Point&) const;
+      virtual std::string    toString() const;
 
     private:
 

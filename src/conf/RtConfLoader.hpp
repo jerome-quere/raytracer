@@ -24,12 +24,12 @@ namespace Rt
     {
     public:
       Loader();
-      
+
       bool load(const QString&);
       Conf conf() const;
-      
+
     private:
-      
+
       bool parse();
       bool parseInt(const QDomElement&, int&);
       bool parseDouble(const QDomElement&, Math::Double&);
@@ -42,9 +42,13 @@ namespace Rt
       bool parse3d(const QDomElement&);
       bool parseEye(const QDomElement&);
       bool parseObjects(const QDomElement&);
+      bool parseLights(const QDomElement&);
       bool parseObjectProperty(const QDomElement&, Object::Object*);
       bool parseObject(const QDomElement&);
-      bool parseObjectColor(const QDomElement&, Object::Object*); 
+      bool parseLight(const QDomElement&);
+      bool parseObjectColor(const QDomElement&, Object::Object*);
+      bool parseObjectShininess(const QDomElement&, Object::Object*);
+      bool parseObjectReflexion(const QDomElement&, Object::Object*);
       bool parseSphere(const QDomElement&, Object::Object*&);
       bool parsePlane(const QDomElement&, Object::Object*&);
 

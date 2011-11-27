@@ -18,11 +18,10 @@ namespace Rt
 
       Thread(ThreadPool&);
       ~Thread();
-      
+
     protected:
 
       void run();
- 
       void processTaskQueue();
 
     private:

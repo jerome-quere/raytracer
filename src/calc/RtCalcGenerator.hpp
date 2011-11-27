@@ -16,13 +16,13 @@ namespace Rt
       Q_OBJECT;
 
     public:
-      
+
       Generator(const Conf::Conf&);
       const Image& generate();
       void	   generate(Image&, const Object::Eye&);
-      
+
       const Image& image() const;
-      
+
     private slots:
 
       void onThreadPoolDone();

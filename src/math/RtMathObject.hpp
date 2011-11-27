@@ -15,8 +15,12 @@ namespace Rt
     {
     public:
       virtual QVector<Point> intersection(const Line&) const = 0;
+      virtual Vector	     normalVector(const Point&) const = 0;
+      virtual std::string    toString() const = 0;
+
+      friend std::ostream& operator<<(std::ostream&, const Object&);
+
     };
-   
   }
 }
 

@@ -15,11 +15,12 @@ namespace Rt
     class Calculator
     {
     public:
-      
+
       static Math::Point screenPoint(const Object::Eye&, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
+      static Color calcEffect(const Conf::Conf& conf, const Intersection& Intersection);
       static Color pixelColor(const Conf::Conf& conf, const Math::Line& line);
       static Intersection closestObject(const Conf::Conf conf, const Math::Line& line);
-      
+
     };
   }
 }

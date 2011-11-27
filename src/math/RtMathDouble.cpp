@@ -9,7 +9,7 @@ namespace Rt
   {
     const double Double::error_margin = 0.00000001;
 
-    Double::Double(double value) :
+    Double::Double(const double value) :
       _value(value),
       _squareFill(false),
       _square(0),
@@ -62,6 +62,12 @@ namespace Rt
     Double Double::operator+(const Double& obj) const
     {
       return (Double(_value + obj._value));
+    }
+
+    Double& Double::operator+=(const Double& obj)
+    {
+      _value += obj._value;
+      return (*this);
     }
 
     Double Double::operator-(const Double& obj) const
