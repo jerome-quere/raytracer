@@ -19,7 +19,7 @@ namespace Rt
       _sin(0),
       _cosFill(false),
       _cos(0)
-    {  
+    {
     }
 
     Double::~Double()
@@ -146,7 +146,7 @@ namespace Rt
     {
       if (powNum != 2)
 	{
-	  return (::pow(_value, powNum));
+	  return (::powf(_value, powNum));
 	}
       if (!_squareFill)
 	{

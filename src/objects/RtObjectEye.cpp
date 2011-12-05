@@ -1,5 +1,6 @@
 #include <cmath>
 #include "RtObjectEye.hpp"
+#include "RtMathTransformation.hpp"
 
 namespace Rt
 {
@@ -37,7 +38,7 @@ namespace Rt
 	{
 	  return (0);
 	}
-      
+
       if (_direction.x() == 0)
 	{
 	  if (_direction.z() < 0)
@@ -46,7 +47,7 @@ namespace Rt
 	    return (M_PI_2);
 	}
 
-      return (atan((_direction.z() / _direction.x()).value()));      
+      return (atan((_direction.z() / _direction.x()).value()));
     }
 
     const Math::Double Eye::zAlpha() const
@@ -56,7 +57,7 @@ namespace Rt
 	{
 	  return (0);
 	}
-      
+
       if (_direction.x() == 0)
 	{
 	  if (_direction.y() > 0)
@@ -67,6 +68,24 @@ namespace Rt
 
       return (atan((_direction.y() / _direction.x()).value()));
     }
-   
+
+    Eye Eye::rightEye() const
+    {
+      Math::Point p;
+      Math::Transformation trans(_position.toVector(), 0, -yAlpha(), -zAlpha());
+      p.y() = 5;
+      p = trans.apply(p);
+      return (Eye(p, _direction));
+    }
+
+    Eye Eye::leftEye() const
+    {
+      Math::Point p;
+      Math::Transformation trans(_position.toVector(), 0, -yAlpha(), -zAlpha());
+      p.y() = -5;
+      p = trans.apply(p);
+      return (Eye(p, _direction));
+    }
+
   }
 }

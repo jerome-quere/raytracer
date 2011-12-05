@@ -1,27 +1,24 @@
 #include "RtCalcThread.hpp"
 #include "RtCalcThreadPool.hpp"
-#include "RtCalcThreadEventListener.hpp"
 
 namespace Rt
 {
   namespace Calc
   {
     Thread::Thread(ThreadPool& threadPool) :
-      _threadPool(threadPool),
-      _listener(NULL)
+      _threadPool(threadPool)
     {
-
+      QObject::moveToThread(this);
     }
 
     Thread::~Thread()
     {
-      delete _listener;
     }
 
     void Thread::run()
     {
-      _listener = new ThreadEventListener(*this);
-      _listener->connect(&_threadPool, SIGNAL(newTask()), SLOT(onNewTask()));
+      QObject::connect(&_threadPool, SIGNAL(newTask()),
+		       this, SLOT(onNewTask()));
       exec();
     }
 
@@ -38,6 +35,11 @@ namespace Rt
 	    }
 	  delete task;
 	}
+    }
+
+    void Thread::onNewTask()
+    {
+      processTaskQueue();
     }
 
   }

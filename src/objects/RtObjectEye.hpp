@@ -16,18 +16,21 @@ namespace Rt
       Eye(const Math::Point&, const Math::Vector&);
       ~Eye();
       Eye(const Eye&);
-      
+
       const Math::Vector& direction() const;
       const Math::Point& position() const;
 
       const Math::Double yAlpha() const;
       const Math::Double zAlpha() const;
-     
+
+      Eye rightEye() const;
+      Eye leftEye() const;
+
     private:
-      
+
       Math::Point	_position;
       Math::Vector	_direction;
- 
+
     };
   }
 }

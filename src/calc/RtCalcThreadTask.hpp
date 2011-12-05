@@ -18,7 +18,7 @@ namespace Rt
 
       void	run();
       void	lastTask(bool);
-      bool       lastTask() const;
+      bool      lastTask() const;
 
     private:
 

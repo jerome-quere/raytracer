@@ -1,11 +1,12 @@
 <raytracer>
-  <width>400</width>
-  <height>300</height>
+  <width>800</width>
+  <height>600</height>
+  <enable3D>true</enable3D>
   <eye>
     <position>
       <x>-400</x>
       <y>0</y>
-      <z>50</z>
+      <z>0</z>
     </position>
     <direction>
       <x>1</x>
@@ -19,8 +20,8 @@
     <object type="sphere">
       <center>
 	<x>0</x>
-	<y>0</y>
-	<z>300</z>
+	<y>-200</y>
+	<z>0</z>
       </center>
       <rayon>100</rayon>
       <color>FFA500</color>
@@ -28,15 +29,28 @@
       <reflexion>0</reflexion>
     </object>
 
+    <object type="sphere">
+      <center>
+	<x>800</x>
+	<y>200</y>
+	<z>50</z>
+      </center>
+      <rayon>200</rayon>
+      <color>FFA500</color>
+      <shininess>0</shininess>
+      <reflexion>0.5</reflexion>
+    </object>
+
     <object type="plan">
       <a>0</a>
       <b>0</b>
       <c>1</c>
-      <d>0</d>
+      <d>100</d>
       <color>33DD88</color>
       <shininess>0</shininess>
       <reflexion>0</reflexion>
     </object>
+
 
   </objects>
 
@@ -46,23 +60,14 @@
 
     <light>
       <position>
-	<x>-200</x>
-	<y>100</y>
+	<x>200</x>
+	<y>200</y>
 	<z>100</z>
       </position>
       <intensity>1</intensity>
-      <color>FF0000</color>
+      <color>FFFFFF</color>
     </light>
 
-    <light>
-      <position>
-	<x>-200</x>
-	<y>-100</y>
-	<z>100</z>
-      </position>
-      <intensity>1</intensity>
-      <color>0000FF</color>
-    </light>
 
   </lights>
 

@@ -3,7 +3,7 @@
  *  This file is part of the project raytracer.                              *
  *  Made by Jerome Quere < contact@jeromequere.fr >                          *
  *  Created on     11/27/11 23:27:17                                         *
- *  Last update on 11/28/11 00:38:48                                         *
+ *  Last update on 12/05/11 01:05:58                                         *
  *                                                                           *
  *****************************************************************************/
 

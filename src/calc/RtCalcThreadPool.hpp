@@ -21,28 +21,31 @@ namespace Rt
       ThreadPool(unsigned int _nbThread);
       ~ThreadPool();
 
-      void	start();
-      void	stop();
-      void	pause();
-      
       void	addTask(ThreadTask*);
 
 
     protected:
 
-      ThreadTask* getNextTask();	
+      ThreadTask* getNextTask();
 
     signals:
 
       void	newTask();
       void	done();
+      void	percentUpdate(int percent);
 
     private:
+
+      void	calcPercent();
 
       QVector<Thread*>		    _threads;
       unsigned int		    _nbThread;
       QMutex			    _mutex;
       QQueue<ThreadTask *>	    _queue;
+
+      QAtomicInt		    _nbTaskDone;
+      QAtomicInt		    _nbTaskTotal;
+      QAtomicInt		    _percent;
     };
   }
 }

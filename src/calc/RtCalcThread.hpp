@@ -2,7 +2,6 @@
 #define _RT_CALC_THREAD_
 
 #include <QThread>
-#include "RtCalcThreadEventListener.hpp"
 
 namespace Rt
 {
@@ -12,7 +11,7 @@ namespace Rt
 
     class Thread : public QThread
     {
-      friend class ThreadEventListener;
+      Q_OBJECT;
 
     public:
 
@@ -24,10 +23,13 @@ namespace Rt
       void run();
       void processTaskQueue();
 
+    private slots:
+
+      void onNewTask();
+
     private:
 
       ThreadPool&	_threadPool;
-      ThreadEventListener*	_listener;
     };
   }
 }

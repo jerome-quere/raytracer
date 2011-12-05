@@ -51,7 +51,7 @@ namespace Rt
        actions["eye"] = &Loader::parseEye;
        actions["width"] = &Loader::parseWidth;
        actions["height"] = &Loader::parseHeight;
-       actions["3d"] = &Loader::parse3d;
+       actions["enable3D"] = &Loader::parse3d;
        QDomNodeList childs = root.childNodes();
 
        for (unsigned int i = 0 ; i < childs.length() ; i++)
@@ -96,7 +96,7 @@ namespace Rt
     {
       bool enable;
 
-      if (parseBool(node, enable))
+      if (!parseBool(node, enable))
 	{
 	  return (false);
 	}
@@ -272,7 +272,6 @@ namespace Rt
     bool Loader::parseBool(const QDomElement& node, bool& value)
     {
       QDomText text = node.firstChild().toText();
-
       if (text.isNull())
 	{
 	  return (false);

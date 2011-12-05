@@ -26,9 +26,6 @@ int main(int argc, char** argv)
   Rt::Calc::Generator g(conf);
 
   g.generate();
-  QImage image = g.image().toQImage();
-
-  image.save("test.jpg", NULL, 100);
 
   return (app.exec());
 }

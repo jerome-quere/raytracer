@@ -1,9 +1,11 @@
 #include <cmath>
 #include "RtCalcCalculator.hpp"
+#include "RtMathConstant.hpp"
 #include "RtMathTransformation.hpp"
 #include "RtCalcIntersection.hpp"
 #include "RtEffectLight.hpp"
 #include "RtEffectReflexion.hpp"
+#include "RtEffectShininess.hpp"
 
 #include <QDebug>
 namespace Rt
@@ -19,7 +21,7 @@ namespace Rt
       Math::Point p;
       Math::Transformation trans(eye.position().toVector(), 0, -eye.yAlpha(), -eye.zAlpha());      
 
-      p.x() = width / 2;
+      p.x() = (width / 2) / (sin(Math::PI4.value()));
       p.y() = -((int)width / 2) + (int)x;
       p.z() = ((int)height / 2) - (int)y;
 
@@ -30,12 +32,14 @@ namespace Rt
     Color Calculator::calcEffect(const Conf::Conf& conf,
 				 const Intersection& intersection)
     {
-      Effect::Light  effect(conf);
+      Effect::Light  light(conf);
+      Effect::Shininess  shininess(conf);
       Effect::Reflexion reflexion(conf);
 
-      return (reflexion.apply(intersection,
-			   effect.apply(intersection,
-					intersection.object()->color())));
+      return (shininess.apply(intersection,
+	      reflexion.apply(intersection,
+	      light.apply(intersection,
+   	      intersection.object()->color()))));
     }
 
     Color Calculator::pixelColor(const Conf::Conf& conf, const Math::Line& line)

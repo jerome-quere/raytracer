@@ -18,7 +18,7 @@ namespace Rt
     public:
 
       Generator(const Conf::Conf&);
-      const Image& generate();
+      void	   generate();
       void	   generate(Image&, const Object::Eye&);
 
       const Image& image() const;
@@ -26,6 +26,7 @@ namespace Rt
     private slots:
 
       void onThreadPoolDone();
+      void onThreadPoolPercentUpdate(int percent);
 
     private:
 

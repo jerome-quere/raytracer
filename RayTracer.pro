@@ -24,7 +24,6 @@ HEADERS += src/calc/RtCalcCalculator.hpp                \
            src/calc/RtCalcImage.hpp                     \
            src/calc/RtCalcIntersection.hpp              \
            src/calc/RtCalcThread.hpp                    \
-           src/calc/RtCalcThreadEventListener.hpp       \
            src/calc/RtCalcThreadPool.hpp                \
            src/calc/RtCalcThreadTask.hpp                \
            src/conf/RtConfConf.hpp                      \
@@ -32,6 +31,7 @@ HEADERS += src/calc/RtCalcCalculator.hpp                \
            src/effect/RtEffectEffect.hpp                \
            src/effect/RtEffectLight.hpp                 \
            src/effect/RtEffectReflexion.hpp             \
+           src/effect/RtEffectShininess.hpp             \
            src/gui/RtGuiConfFileDialog.hpp              \
            src/gui/RtGuiController.hpp                  \
            src/gui/RtGuiMainWindow.hpp                  \
@@ -59,13 +59,13 @@ SOURCES += src/calc/RtCalcCalculator.cpp                \
            src/calc/RtCalcImage.cpp                     \
            src/calc/RtCalcIntersection.cpp              \
            src/calc/RtCalcThread.cpp                    \
-           src/calc/RtCalcThreadEventListener.cpp       \
            src/calc/RtCalcThreadPool.cpp                \
            src/calc/RtCalcThreadTask.cpp                \
            src/conf/RtConfConf.cpp                      \
            src/conf/RtConfLoader.cpp                    \
            src/effect/RtEffectLight.cpp                 \
            src/effect/RtEffectReflexion.cpp             \
+           src/effect/RtEffectShininess.cpp             \
            src/gui/RtGuiConfFileDialog.cpp              \
            src/gui/RtGuiController.cpp                  \
            src/gui/RtGuiMainWindow.cpp                  \

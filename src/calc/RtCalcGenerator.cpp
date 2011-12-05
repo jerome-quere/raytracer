@@ -1,5 +1,6 @@
 #include "RtCalcGenerator.hpp"
 #include "RtCalcCalculator.hpp"
+#include "RtMathTransformation.hpp"
 
 namespace Rt
 {
@@ -17,13 +18,26 @@ namespace Rt
 	  _imageLeft = new Image(conf.imageWidth(), conf.imageHeight());
 	  _imageRight = new Image(conf.imageWidth(), conf.imageHeight());
 	}
-      connect(&_threadPool, SIGNAL(done()), SLOT(onThreadPoolDone()));
+      QObject::connect(&_threadPool, SIGNAL(done()),
+		       this, SLOT(onThreadPoolDone()));
+
+      QObject::connect(&_threadPool, SIGNAL(percentUpdate(int)),
+		       this, SLOT(onThreadPoolPercentUpdate(int)));
     }
 
-    const Image& Generator::generate()
+    void Generator::generate()
     {
-      generate(_image, _conf.eye());
-      return (_image);
+      if (_conf.is3dEnable())
+	{
+	  Object::Eye rightEye = _conf.eye().rightEye();
+	  Object::Eye leftEye  = _conf.eye().leftEye();
+	  generate(*_imageRight, rightEye);
+	  generate(*_imageLeft, leftEye);
+	}
+      else
+	{
+	  generate(_image, _conf.eye());
+	}
     }
 
     void	Generator::generate(Image& image, const Object::Eye& eye)
@@ -55,7 +69,39 @@ namespace Rt
 
     void	 Generator::onThreadPoolDone()
     {
+
+      if (_conf.is3dEnable())
+	{
+	  int dec = 10;
+
+	  for (unsigned int x =  dec ; x < _imageRight->width() - dec ; x++)
+	    {
+	      for (unsigned int y = 0 ; y < _imageRight->height() ; y++)
+		{
+		  _image[x - dec][y].red((*_imageLeft)[x][y].red());
+		  _image[x - dec][y].green((*_imageRight)[x - dec][y].green());
+		  _image[x - dec][y].blue((*_imageRight)[x - dec][y].blue());
+		  (*_imageRight)[x][y].red(0);
+		  (*_imageLeft)[x][y].green(0);
+		  (*_imageLeft)[x][y].blue(0);
+		}
+	    }
+	  QImage image = _imageRight->toQImage();
+	  image.save("r.jpg", NULL, 100);
+	  QImage image2 = _imageLeft->toQImage();
+	  image2.save("l.jpg", NULL, 100);
+	}
+
+      QImage image3 = _image.toQImage();
+      image3.save("img.jpg", NULL, 100);
+
+
       std::cout << "Done" << std::endl;
+      exit(0);
+    }
+
+    void	Generator::onThreadPoolPercentUpdate(int percent)
+    {
     }
   }
 }

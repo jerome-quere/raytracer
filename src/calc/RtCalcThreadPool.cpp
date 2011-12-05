@@ -34,14 +34,29 @@ namespace Rt
 	{
 	  return (NULL);
 	}
+      _nbTaskDone.ref();
+      calcPercent();
       return (_queue.dequeue());
     }
 
     void	ThreadPool::addTask(ThreadTask* task)
     {
       QMutexLocker locker(&_mutex);
+      _nbTaskTotal.ref();
       _queue.enqueue(task);
       newTask();
+      calcPercent();
+    }
+
+    void	ThreadPool::calcPercent()
+    {
+      int	percent = ((float)_nbTaskDone / (float)_nbTaskTotal) * 100.0;
+
+      if (_percent != percent)
+	{
+	  _percent = percent;
+	  percentUpdate(_percent);
+	}
     }
 
   }
